@@ -1,0 +1,40 @@
+policy_id: ai_robustness_policy_v2
+owner: ai_governance_committee
+review_cycle: quarterly
+
+metrics:
+  pgd_defended_accuracy:
+    escalate_below: 0.30
+    warn_below: 0.50
+    weight: 0.5
+
+  fgsm_defended_accuracy:
+    escalate_below: 0.50
+    warn_below: 0.70
+    weight: 0.2
+
+  detector_flag_rate:
+    escalate_above: 0.30
+    warn_above: 0.10
+    weight: 0.2
+
+  clean_accuracy:
+    escalate_below: 0.90
+    warn_below: 0.95
+    weight: 0.1
+
+actions:
+  escalate:
+    decision: ESCALATE
+    action: trigger_adversarial_training
+    severity: HIGH
+
+  warn:
+    decision: WARN
+    action: increase_monitoring
+    severity: MEDIUM
+
+  accept:
+    decision: ACCEPT
+    action: monitor
+    severity: LOW
